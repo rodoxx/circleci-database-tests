@@ -9,7 +9,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         libonig-dev \
         libcurl4-openssl-dev \
         pkg-config \
-        libssl-dev
+        libssl-dev \
+        vim
 
 RUN curl -s https://getcomposer.org/installer | php -- \
         --install-dir=/usr/local/bin \
@@ -21,3 +22,6 @@ RUN pecl config-set php_ini /etc/php.ini
 
 # Clean repository
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Copy project files
+COPY . /var/www/
