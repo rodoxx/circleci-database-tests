@@ -1,0 +1,33 @@
+version: "3.5"
+
+services:
+  php-fpm:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: php
+    volumes:
+      - .:/var/www
+    links:
+      - mysql
+    networks:
+      service-network:
+        aliases:
+          - php-fpm
+
+  mysql:
+    image: mysql:5.6
+    ports:
+      - "3311:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: testpassword
+      MYSQL_DATABASE: testdatabase
+    networks:
+      service-network:
+        aliases:
+          - mysql
+
+networks:
+  service-network:
